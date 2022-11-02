@@ -8,10 +8,18 @@ on:
 
 jobs:
   build:
-
     runs-on: windows-latest
 
     steps:
+    - name: Install Cygwin
+      # You may pin to the exact commit or the version.
+      # uses: egor-tensin/setup-cygwin@4f96f9fecb8c952fa32ff791b0a77d93d5191bb4
+      uses: egor-tensin/setup-cygwin@v3
+      with:
+        # Packages to install, separated by a space
+        packages: bash bzip2 ca-certificates coreutils gawk gnupg grep gzip libiconv make patch sed tar unzip wget zip
+    - name: Get dependencies
+      run: pacman -Sy ca-certificates gawk grep make patch tar unzip wget zip
     - uses: actions/checkout@v3
     - name: make
       run: make -f Makefile.mingw
